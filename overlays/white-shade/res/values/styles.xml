@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- v2: SystemUI's own Theme.SystemUI, all 15 items restated unchanged (an overlaid style replaces the
+     whole style), plus the surface colours the notification panel reads in code. Dynamic colour made
+     surfaceDim #dcd9db (the grey panel) and surface/surfaceBright #fcf8fa (cards); literals = white. -->
+<resources xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    xmlns:sysuiprv="http://schemas.android.com/apk/prv/res/com.android.systemui">
+    <style name="Theme.SystemUI" parent="@*android:style/Theme.DeviceDefault.SystemUI">
+        <item name="android:homeAsUpIndicator">@sysuiprv:drawable/ic_arrow_back</item>
+        <item name="android:colorError">@*android:color/error_color_material_dark</item>
+        <item name="android:isLightTheme">false</item>
+        <item name="androidprv:lockPatternStyle">@sysuiprv:style/LockPatternViewStyle</item>
+        <item name="sysuiprv:backgroundProtectedStyle">@sysuiprv:style/BackgroundProtectedStyle</item>
+        <item name="sysuiprv:darkIconTheme">@sysuiprv:style/DualToneDarkTheme</item>
+        <item name="sysuiprv:lightIconTheme">@sysuiprv:style/DualToneLightTheme</item>
+        <item name="sysuiprv:lockPatternStyle">@sysuiprv:style/LockPatternContainerStyle</item>
+        <item name="sysuiprv:lockPinPasswordStyle">@sysuiprv:style/LockPinPasswordContainerStyle</item>
+        <item name="sysuiprv:numPadKeyStyle">@sysuiprv:style/NumPadKey</item>
+        <item name="sysuiprv:passwordStyle">@sysuiprv:style/PasswordTheme</item>
+        <item name="sysuiprv:shadowRadius">@sysuiprv:dimen/keyguard_shadow_radius</item>
+        <item name="sysuiprv:wallpaperTextColor">@*android:color/primary_text_material_dark</item>
+        <item name="sysuiprv:wallpaperTextColorAccent">@sysuiprv:color/material_dynamic_primary90</item>
+        <item name="sysuiprv:wallpaperTextColorSecondary">@*android:color/secondary_text_material_dark</item>
+        <item name="androidprv:materialColorSurfaceDim">#FFFFFFFF</item>
+        <item name="androidprv:materialColorSurface">#FFFFFFFF</item>
+        <item name="androidprv:materialColorSurfaceBright">#FFFFFFFF</item>
+    </style>
+</resources>

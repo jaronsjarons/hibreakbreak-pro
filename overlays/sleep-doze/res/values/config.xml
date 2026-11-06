@@ -1,0 +1,4 @@
+<resources>
+    <string name="config_dozeComponent" translatable="false">local.codex.hibreakprobe/.BirdDreamService</string>
+    <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
+</resources>

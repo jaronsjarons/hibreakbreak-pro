@@ -1,0 +1,5 @@
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="local.claude.keyboard.SetupActivity"
+    android:supportsSwitchingToNextInputMethod="true">
+    <subtype android:label="English (US)" android:imeSubtypeLocale="en_US" android:imeSubtypeMode="keyboard" />
+</input-method>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_bodyFontFamily" translatable="false">atkinson</string>
+    <string name="config_bodyFontFamilyMedium" translatable="false">atkinson-semi-bold</string>
+    <string name="config_headlineFontFamily" translatable="false">atkinson-medium</string>
+    <string name="config_headlineFontFamilyMedium" translatable="false">atkinson-bold</string>
+    <string name="config_lightFontFamily" translatable="false">atkinson-light</string>
+    <string name="config_regularFontFamily" translatable="false">atkinson-regular</string>
+    <string name="font_atkinson_overlay" translatable="false">Atkinson Hyperlegible</string>
+</resources>

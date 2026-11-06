@@ -1,0 +1,9 @@
+<resources>
+    <!-- drawable-nodpi/default_wallpaper.png: plain white, so a fresh install has a white home and lock screen
+         instead of the GSI picture (looked glitchy on e-ink behind the lock screen, owner Nov 6 2026). -->
+    <!-- Light mode by default: e-ink reads best black on white, and the white shade overlays need it. 1 = no night mode. -->
+    <integer name="config_defaultNightMode">1</integer>
+    <!-- No swipe lock screen by default: on e-ink it was drawn over the previous screen and looked broken
+         (owner, Nov 6 2026). Setting a PIN/pattern/fingerprint in Settings still brings a real lock screen. -->
+    <bool name="config_disableLockscreenByDefault">true</bool>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Status bar icons reach the right edge (owner request, Oct 20 2026): the right side was padded
+     ~84 px vs the clock's ~35 px on the left. v2: icons and clock pure black. v3: ~15% larger. Platform-signed RRO.
+     Revert: adb shell cmd overlay disable com.hibreak.overlay.statusbaredge -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hibreak.overlay.statusbaredge" android:versionCode="9" android:versionName="9">
+    <overlay android:targetPackage="com.android.systemui" android:priority="100" />
+    <application android:hasCode="false" android:label="HiBreak status bar to edge" />
+</manifest>

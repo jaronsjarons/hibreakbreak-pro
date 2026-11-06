@@ -1,0 +1,6 @@
+id=hibreak_bootanimation
+name=HiBreakBreak Pro boot screen (diamond pattern)
+version=3
+versionCode=3
+author=HiBreakBreak Pro
+description=Full-screen black and white diamond pattern held during start-up for the e-ink screen (and turns the boot animation on). Disable or remove the module in Magisk to undo.

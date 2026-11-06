@@ -1,0 +1,5 @@
+# Refresh Prince: Evolution X on the HiBreak starts with debug.sf.nobootanimation=1 (only the
+# Bigme logo shows). Turn the boot screen back on before SurfaceFlinger starts it; post-fs-data is the
+# same point at which the Magisk version of this pack sets it (verified on the phone, Oct 26 2026).
+on post-fs-data
+    setprop debug.sf.nobootanimation 0

@@ -1,0 +1,9 @@
+# Build output and signing keys (never publish keys)
+out/
+out-release/
+keys/
+*.p12
+*.jks
+*.keystore
+*.idsig
+.DS_Store

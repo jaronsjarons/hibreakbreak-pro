@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The strip under the keyboard is the gesture navigation bar frame (48 dp). Shrink it to 1 dp. -->
+    <dimen name="navigation_bar_frame_height">1dp</dimen>
+    <dimen name="navigation_bar_frame_height_landscape">1dp</dimen>
+    <dimen name="navigation_bar_height">1dp</dimen>
+    <dimen name="navigation_bar_height_landscape">1dp</dimen>
+    <!-- v3 (Oct 20 2026, owner): no swipe-up-from-bottom Home gesture; Pie Control is the navigation.
+         Swipe-up zone 32/80 dp -> 0 (v4; 1 dp = 2 px still caught bezel-start swipes). Rollback: artifacts/keyboard-bottom-overlay/rollback-v2-keyboardbottom.apk -->
+    <dimen name="navigation_bar_gesture_height">0dp</dimen>
+    <dimen name="navigation_bar_gesture_larger_height">0dp</dimen>
+</resources>

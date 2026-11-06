@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- All-white notification shade and Quick Settings (owner request, Oct 20 2026). The backdrop came from
+     shade_scrim_background_dark -> @android:color/system_under_surface_light, which dynamic colour regenerates
+     from the 333333 palette (near black), so com.hibreak.overlay.lightshade's override of that framework colour
+     never stuck. This overrides SystemUI's own colour with a literal. Platform-signed RRO.
+     Revert: adb shell cmd overlay disable com.hibreak.overlay.whiteshade -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hibreak.overlay.whiteshade" android:versionCode="2" android:versionName="2">
+    <overlay android:targetPackage="com.android.systemui" android:priority="100" />
+    <application android:hasCode="false" android:label="HiBreak white shade" />
+</manifest>

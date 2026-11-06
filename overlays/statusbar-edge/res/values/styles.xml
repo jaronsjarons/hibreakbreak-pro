@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- v8 (owner, Oct 20 2026): status bar clock too bold. Stock style (3 items) restated; fontFamily moved from
+     config_headlineFontFamilyMedium (font overlays map it to -bold, 700, +300 Bold text = ExtraBold) to
+     config_regularFontFamily (v9; v8 Light was too thin). Follows whichever system font is picked. -->
+<resources xmlns:sysuiprv="http://schemas.android.com/apk/prv/res/com.android.systemui">
+    <style name="TextAppearance.StatusBar.Clock" parent="@android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">@sysuiprv:dimen/status_bar_clock_size</item>
+        <item name="android:textColor">@sysuiprv:color/status_bar_clock_color</item>
+        <item name="android:fontFamily">@*android:string/config_regularFontFamily</item>
+    </style>
+</resources>

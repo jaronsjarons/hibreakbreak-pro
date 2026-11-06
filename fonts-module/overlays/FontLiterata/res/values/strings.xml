@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_bodyFontFamily" translatable="false">literata</string>
+    <string name="config_bodyFontFamilyMedium" translatable="false">literata-semi-bold</string>
+    <string name="config_headlineFontFamily" translatable="false">literata-medium</string>
+    <string name="config_headlineFontFamilyMedium" translatable="false">literata-bold</string>
+    <string name="config_lightFontFamily" translatable="false">literata-light</string>
+    <string name="config_regularFontFamily" translatable="false">literata-regular</string>
+    <string name="font_literata_overlay" translatable="false">Literata</string>
+</resources>

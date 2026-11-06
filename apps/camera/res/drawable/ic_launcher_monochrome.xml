@@ -1,0 +1,9 @@
+<!-- Themed (monochrome) icon, Oct 20 2026: line-style camera to match the launcher's other icons (owner).
+     Without it the launcher silhouetted the filled foreground into a plain rectangle. Adaptive 108dp canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#000000" android:strokeWidth="4" android:strokeLineJoin="round" android:fillColor="#00000000"
+        android:pathData="M35,40 H44 L48,34 H60 L64,40 H73 A5,5 0 0 1 78,45 V69 A5,5 0 0 1 73,74 H35 A5,5 0 0 1 30,69 V45 A5,5 0 0 1 35,40 Z" />
+    <path android:strokeColor="#000000" android:strokeWidth="4" android:fillColor="#00000000"
+        android:pathData="M54,48 A9,9 0 1 1 53.99,48 Z" />
+</vector>

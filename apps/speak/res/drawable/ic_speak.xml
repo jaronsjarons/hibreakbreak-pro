@@ -1,0 +1,8 @@
+<!-- Line-style speaker with two sound waves, matches the launcher's themed icons. 108dp adaptive canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#000000" android:strokeWidth="4" android:strokeLineJoin="round" android:fillColor="#00000000"
+        android:pathData="M32,46 H42 L54,36 V72 L42,62 H32 Z" />
+    <path android:strokeColor="#000000" android:strokeWidth="4" android:strokeLineCap="round" android:fillColor="#00000000"
+        android:pathData="M62,46 A10,10 0 0 1 62,62 M68,40 A18,18 0 0 1 68,68" />
+</vector>

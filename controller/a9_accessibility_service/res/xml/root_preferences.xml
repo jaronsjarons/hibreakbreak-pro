@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference app:key="open_display_controls" app:title="Display controls" app:summary="Refresh mode, image adjustments, and frontlights" />
+
+    <SeekBarPreference app:key="default_image_contrast" app:title="Default image contrast" app:summary="Applies to apps using the default. 0 is unchanged. Higher values can hide gray detail." app:defaultValue="0" app:min="0" android:max="99" app:showSeekBarValue="true" />
+
+    <SeekBarPreference app:key="default_grey_darkness" app:title="Default grey darkness" app:summary="Makes greys darker while white stays white (helps light-grey keyboard symbols). 0 is unchanged." app:defaultValue="0" app:min="0" android:max="99" app:showSeekBarValue="true" />
+    <ListPreference app:key="refresh_setting" app:title="Default display speed" app:useSimpleSummaryProvider="true" app:entries="@array/refresh_options" app:entryValues="@array/refresh_values" app:defaultValue="3" />
+    <SwitchPreferenceCompat app:key="fast_keyboard_refresh" app:title="Fast keyboard" app:summary="Use a fast display mode while the keyboard is visible. Restore the app's display mode when it closes." app:defaultValue="true" />
+    <ListPreference app:key="fast_keyboard_mode" app:title="Keyboard display mode" app:useSimpleSummaryProvider="true" app:entries="@array/fast_keyboard_mode_entries" app:entryValues="@array/fast_keyboard_mode_values" app:defaultValue="3" app:dependency="fast_keyboard_refresh" />
+    <ListPreference app:key="clean_after_scroll_v2" app:title="Clean after scrolling" app:useSimpleSummaryProvider="true" app:entries="@array/clean_after_scroll_entries" app:entryValues="@array/clean_after_scroll_values" app:defaultValue="off" />
+    <SwitchPreferenceCompat app:key="live_scroll_reading" app:title="Live scrolling in reading apps" app:summary="Keeps the screen following continuous scrolling in readers such as ReadEra, whose frames the display would otherwise skip." app:defaultValue="true" />
+    <SwitchPreferenceCompat app:key="clean_after_touch_reading" app:title="Clean after touches in reading apps" app:summary="For readers that never report scrolling (such as ReadEra). Also flashes after menu taps." app:defaultValue="false" />
+    <ListPreference app:key="clean_style" app:title="Cleaning flash" app:useSimpleSummaryProvider="true" app:entries="@array/clean_style_entries" app:entryValues="@array/clean_style_values" app:defaultValue="light" />
+    <SwitchPreferenceCompat app:key="shade_clean_light_shade" app:title="Clean notification shade" app:summary="Flash once after the notification shade opens or closes. Off by default: the light shade leaves little ghosting, and the clean briefly slows the panel." app:defaultValue="false" />
+
+    <ListPreference app:key="render_rate" app:title="Android frame rate" app:entries="@array/render_rate_entries" app:entryValues="@array/render_rate_values" app:defaultValue="0" app:dialogTitle="Frame rate after restart" />
+    <Preference app:selectable="false" app:summary="Limits Android rendering after a restart. Visible e-ink speed and ghosting also depend on the display mode." />
+
+    <PreferenceCategory app:title="Navigation">
+        <Preference app:key="android_navigation_settings" app:title="System navigation" app:summary="Restore the bottom buttons or adjust fallback gestures" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Bottom left button">
+        <ListPreference app:key="single_press_eink_action" app:title="Short press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="toggle_backlight" app:dialogTitle="Choose an action for single press" />
+
+        <ListPreference app:key="double_press_eink_action" app:title="Double press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="open_menu" app:dialogTitle="Choose an action for double press" />
+
+        <ListPreference app:key="long_press_eink_action" app:title="Long press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="open_menu" app:dialogTitle="Choose an action for long press" />
+
+        <ListPreference app:key="single_press_eink_action_screen_off" app:title="Short press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="clear" app:dialogTitle="Choose an action for single press when screen is off" />
+
+        <ListPreference app:key="double_press_eink_action_screen_off" app:title="Double press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="dummy" app:dialogTitle="Choose an action for double press when screen is off" />
+
+        <ListPreference app:key="long_press_eink_action_screen_off" app:title="Long press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="dummy" app:dialogTitle="Choose an action for long press when screen is off" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Top left button">
+        <ListPreference app:key="top_single_press_eink_action" app:title="Short press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="clear" app:dialogTitle="Choose an action for single press" />
+
+        <ListPreference app:key="top_double_press_eink_action" app:title="Double press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="open_menu" app:dialogTitle="Choose an action for double press" />
+
+        <ListPreference app:key="top_long_press_eink_action" app:title="Long press" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries" app:entryValues="@array/button_action_values" app:defaultValue="open_settings" app:dialogTitle="Choose an action for long press" />
+
+        <ListPreference app:key="top_single_press_eink_action_screen_off" app:title="Short press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="clear" app:dialogTitle="Choose an action for single press when screen is off" />
+
+        <ListPreference app:key="top_double_press_eink_action_screen_off" app:title="Double press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="dummy" app:dialogTitle="Choose an action for double press when screen is off" />
+
+        <ListPreference app:key="top_long_press_eink_action_screen_off" app:title="Long press (Screen off)" app:useSimpleSummaryProvider="true" app:entries="@array/button_action_entries_screen_off" app:entryValues="@array/button_action_values_screen_off" app:defaultValue="dummy" app:dialogTitle="Choose an action for long press when screen is off" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Refresh Mode Settings">
+        <SwitchPreferenceCompat app:key="allow_custom_broadcast" app:title="Allow Control via Broadcasts" />
+
+
+        <SwitchPreferenceCompat app:key="disable_perapprefresh" app:disableDependentsState="true" app:summaryOff="Disable setting refresh mode per application" app:summaryOn="Enable setting refresh mode per application" app:title="Disable Per-App Refresh Mode" />
+
+
+    </PreferenceCategory>
+
+    </PreferenceScreen>

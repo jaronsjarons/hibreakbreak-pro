@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Light Quick Settings for e-ink (owner request, Oct 11 2026). Platform-signed RRO.
+     Revert: adb shell cmd overlay disable com.hibreak.overlay.lightqs -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hibreak.overlay.lightqs" android:versionCode="4" android:versionName="4">
+    <overlay android:targetPackage="com.android.systemui" android:priority="100" />
+    <application android:hasCode="false" android:label="HiBreak light Quick Settings" />
+</manifest>

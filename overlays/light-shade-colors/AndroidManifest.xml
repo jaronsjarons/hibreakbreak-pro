@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Light notification shade colours for e-ink (owner request, Oct 11 2026). These framework
+     colours are used only by the SystemUI shade/QS. Platform-signed RRO.
+     Revert: adb shell cmd overlay disable com.hibreak.overlay.lightshade -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hibreak.overlay.lightshade" android:versionCode="1" android:versionName="1">
+    <overlay android:targetPackage="android" android:priority="100" />
+    <application android:hasCode="false" android:label="HiBreak light shade colours" />
+</manifest>

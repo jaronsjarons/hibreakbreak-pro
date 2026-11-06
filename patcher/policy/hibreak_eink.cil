@@ -1,0 +1,63 @@
+
+; HiBreak e-ink helper (a9_eink_server) in its own confined domain, replacing the
+; inherited phhsu_daemon (root, permissive). It may only: listen on its socket,
+; read/write the two frontlight files and the e-ink driver controls (labelled below),
+; and set the fixed HWC/refresh properties it already whitelists in code.
+(type hibreak_eink)
+(roletype object_r hibreak_eink)
+(typeattributeset domain (hibreak_eink))
+(typeattributeset coredomain (hibreak_eink))
+(type hibreak_eink_exec)
+(roletype object_r hibreak_eink_exec)
+(typeattributeset file_type (hibreak_eink_exec))
+(typeattributeset exec_type (hibreak_eink_exec))
+(typeattributeset system_file_type (hibreak_eink_exec))
+
+; Started by init (init_daemon_domain).
+(allow init hibreak_eink_exec (file (read getattr map execute open)))
+(allow init hibreak_eink (process (transition)))
+(allow hibreak_eink hibreak_eink_exec (file (read getattr map execute open entrypoint)))
+(dontaudit init hibreak_eink (process (noatsecure)))
+(allow init hibreak_eink (process (siginh rlimitinh)))
+(typetransition init hibreak_eink_exec process hibreak_eink)
+
+; Abstract socket a9_eink_socket. Clients are the controller and the sleep app (both system_app);
+; the helper also checks the peer uid (root or system) itself.
+(allow hibreak_eink self (unix_stream_socket (create bind listen accept read write getattr getopt setopt shutdown)))
+(allow system_app hibreak_eink (unix_stream_socket (connectto)))
+
+; Frontlight (lm3630a) and e-ink driver controls get their own labels, so the helper
+; cannot touch any other sysfs or debugfs file.
+(type hibreak_light_sysfs)
+(roletype object_r hibreak_light_sysfs)
+(typeattributeset fs_type (hibreak_light_sysfs))
+(typeattributeset sysfs_type (hibreak_light_sysfs))
+(genfscon sysfs /devices/platform/11d01000.i2c7/i2c-7/7-0036 (u object_r hibreak_light_sysfs ((s0) (s0))))
+(type hibreak_eink_debugfs)
+(roletype object_r hibreak_eink_debugfs)
+(typeattributeset fs_type (hibreak_eink_debugfs))
+(typeattributeset debugfs_type (hibreak_eink_debugfs))
+(genfscon debugfs /eink_debug (u object_r hibreak_eink_debugfs ((s0) (s0))))
+; Keep what every service could do before the relabel (vbbot's policy: allow domain sysfs/debugfs dir search,
+; sysfs lnk_file read). Found on hardware Nov 6 2026: the screen driver (OverlayEngine) searches eink_debug.
+(allow domain hibreak_light_sysfs (dir (search)))
+(allow domain hibreak_light_sysfs (lnk_file (read getattr)))
+(allow domain hibreak_eink_debugfs (dir (search)))
+(allow hibreak_eink sysfs (dir (search)))
+(allow hibreak_eink debugfs (dir (search)))
+(allow hibreak_eink hibreak_light_sysfs (dir (search)))
+(allow hibreak_eink hibreak_eink_debugfs (dir (search)))
+(allow hibreak_eink hibreak_light_sysfs (file (open read write getattr)))
+(allow hibreak_eink hibreak_eink_debugfs (file (open read write getattr)))
+
+; Properties: the fixed vendor.xrz.* refresh controls (vendor_default_prop on this vendor)
+; and the one-shot refresh request (hibreak_hwc_state_prop).
+(allow hibreak_eink property_socket (sock_file (write)))
+(allow hibreak_eink init (unix_stream_socket (connectto)))
+(allow hibreak_eink vendor_default_prop (property_service (set)))
+(allow hibreak_eink vendor_default_prop (file (read getattr map open)))
+(allow hibreak_eink hibreak_hwc_state_prop (property_service (set)))
+(allow hibreak_eink hibreak_hwc_state_prop (file (read getattr map open)))
+
+; Trial, Nov 6 2026 (observe-only): the helper writes driver files not owned by root, so it needs DAC override.
+(allow hibreak_eink self (capability (dac_override)))

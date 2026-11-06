@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="config_bodyFontFamily" translatable="false">lexend</string>
+    <string name="config_bodyFontFamilyMedium" translatable="false">lexend-semi-bold</string>
+    <string name="config_headlineFontFamily" translatable="false">lexend-medium</string>
+    <string name="config_headlineFontFamilyMedium" translatable="false">lexend-bold</string>
+    <string name="config_lightFontFamily" translatable="false">lexend-light</string>
+    <string name="config_regularFontFamily" translatable="false">lexend-regular</string>
+    <string name="font_lexend_overlay" translatable="false">Lexend</string>
+</resources>

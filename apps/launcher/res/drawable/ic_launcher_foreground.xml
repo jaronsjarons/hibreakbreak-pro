@@ -1,0 +1,5 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Three list lines: a plain app list -->
+    <path android:fillColor="#000000" android:pathData="M34,40h40v5h-40z M34,52h40v5h-40z M34,64h28v5h-28z" />
+</vector>

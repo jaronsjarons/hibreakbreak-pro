@@ -1,0 +1,10 @@
+
+; Dedicated label for three Bigme compositor output properties only.
+; No permissive domains, arbitrary vendor-property grants or syscall changes.
+(type hibreak_hwc_state_prop)
+(roletype object_r hibreak_hwc_state_prop)
+(typeattributeset property_type (hibreak_hwc_state_prop))
+(typeattributeset vendor_property_type (hibreak_hwc_state_prop))
+(typeattributeset vendor_internal_property_type (hibreak_hwc_state_prop))
+(allow hal_graphics_composer_default hibreak_hwc_state_prop (property_service (set)))
+(allow hal_graphics_composer_default hibreak_hwc_state_prop (file (getattr open read map)))

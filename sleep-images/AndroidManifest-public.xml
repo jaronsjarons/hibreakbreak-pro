@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="local.codex.hibreakprobe" android:sharedUserId="android.uid.system" android:versionCode="100" android:versionName="hibreak-eink-0.1.0">
+    <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="35" />
+    <uses-permission android:name="android.permission.WRITE_DREAM_STATE" />
+    <uses-permission android:name="android.permission.READ_DREAM_STATE" />
+    <application android:label="Sleep images" android:allowBackup="false"
+        android:directBootAware="true" android:defaultToDeviceProtectedStorage="true">
+        <activity android:name=".SleepImagesActivity" android:exported="true" android:label="Sleep images">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".BirdDreamService" android:exported="true"
+            android:permission="android.permission.BIND_DREAM_SERVICE">
+            <intent-filter><action android:name="android.service.dreams.DreamService" /></intent-filter>
+        </service>
+    </application>
+</manifest>

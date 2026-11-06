@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Refresh Prince: the e-ink controller must not start "stopped" after a fresh install, or its boot
+     receiver never runs and the controller (side buttons, refresh modes) stays off (seen Nov 6 2026).
+-->
+<config>
+    <initial-package-state package="com.lmqr.ha9_comp_service" stopped="false"/>
+</config>

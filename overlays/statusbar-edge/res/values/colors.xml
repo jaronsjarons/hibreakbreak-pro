@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Owner, Oct 20 2026: status bar icons and clock darker on e-ink. Stock tints on a light bar are
+     60% black (single tone) and 48% / 24% (dual-tone fill / background). -->
+<resources>
+    <color name="dark_mode_icon_color_single_tone">#FF000000</color>
+    <color name="dark_mode_icon_color_dual_tone_fill">#FF000000</color>
+    <color name="dark_mode_icon_color_dual_tone_background">#4D000000</color>
+</resources>

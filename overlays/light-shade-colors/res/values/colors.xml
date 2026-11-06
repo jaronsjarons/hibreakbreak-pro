@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Black text on white: light tiles, black active tiles, white backdrop. -->
+<resources>
+    <color name="system_under_surface_light">#FFFFFFFF</color>
+    <color name="system_under_surface_dark">#FFFFFFFF</color>
+    <color name="system_shade_inactive_light">#FFEEEEEE</color>
+    <color name="system_shade_inactive_dark">#FFEEEEEE</color>
+    <color name="system_on_shade_inactive_light">#FF000000</color>
+    <color name="system_on_shade_inactive_dark">#FF000000</color>
+    <color name="system_on_shade_inactive_variant_light">#FF333333</color>
+    <color name="system_on_shade_inactive_variant_dark">#FF333333</color>
+    <color name="system_shade_active_light">#FF000000</color>
+    <color name="system_shade_active_dark">#FF000000</color>
+    <color name="system_on_shade_active_light">#FFFFFFFF</color>
+    <color name="system_on_shade_active_dark">#FFFFFFFF</color>
+    <color name="system_on_shade_active_variant_light">#FFDDDDDD</color>
+    <color name="system_on_shade_active_variant_dark">#FFDDDDDD</color>
+    <color name="system_shade_disabled_light">#FFF6F6F6</color>
+    <color name="system_shade_disabled_dark">#FFF6F6F6</color>
+</resources>

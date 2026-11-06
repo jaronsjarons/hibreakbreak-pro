@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="local.refreshprince.defaults" android:versionCode="1">
+    <uses-sdk android:minSdkVersion="28" android:targetSdkVersion="35" />
+    <!-- Static, above the GSI's me.phh.treble.overlay.nightmode (priority 85), which defaults to dark mode. -->
+    <overlay android:targetPackage="android" android:isStatic="true" android:priority="95" />
+    <application android:hasCode="false" android:label="Refresh Prince defaults" />
+</manifest>

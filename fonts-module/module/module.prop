@@ -1,0 +1,6 @@
+id=hibreak_fonts
+name=HiBreak fonts (Atkinson Hyperlegible Next, Lexend, Literata)
+version=1
+versionCode=1
+author=HiBreakBreak Pro
+description=Adds three SIL OFL fonts as system font choices (Evolver > Themes > Fonts). Disable or remove the module in Magisk to undo.

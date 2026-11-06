@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shade header clock/date: white on the (now white) shade. The status bar re-tints its clock. -->
+    <color name="status_bar_clock_color">#FF000000</color>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Evolution X "OOS" shade header clock, black on the white e-ink shade (the stock header
+     clock is hard-coded white in ShadeHeaderController). Selected by
+     settings system qs_header_clock_style. Same structure and ids as the ROM layout. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sysuiprv="http://schemas.android.com/apk/prv/res/com.android.systemui"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:gravity="center_vertical">
+    <FrameLayout android:id="@sysuiprv:id/oos_clock" android:tag="clock"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical" android:gravity="center_vertical"
+        android:layoutDirection="ltr">
+        <TextClock android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical" android:layout_marginTop="8dp"
+            android:textSize="22sp" android:textStyle="bold" android:textColor="#FF000000"
+            android:singleLine="true" android:includeFontPadding="false"
+            android:format12Hour="hh:mm" android:format24Hour="HH:mm" />
+    </FrameLayout>
+    <TextClock android:id="@sysuiprv:id/oos_date"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp" android:textSize="13sp" android:textStyle="bold"
+        android:textColor="#FF000000" android:textAlignment="viewStart"
+        android:singleLine="true" android:includeFontPadding="false"
+        android:format12Hour="EEEE, MMM dd" android:format24Hour="EEEE, dd MMM" />
+</LinearLayout>

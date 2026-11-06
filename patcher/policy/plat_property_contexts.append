@@ -1,0 +1,7 @@
+
+vendor.xrz.fps_limit u:object_r:hibreak_hwc_state_prop:s0 exact int
+vendor.xrz.hwc_idle u:object_r:hibreak_hwc_state_prop:s0 exact bool
+vendor.xrz.gray_256_dither u:object_r:hibreak_hwc_state_prop:s0 exact bool
+
+# Exact stock one-shot request; HWC consumes 4 and resets to -1.
+vendor.xrz.force_global_refresh_mode u:object_r:hibreak_hwc_state_prop:s0 exact int

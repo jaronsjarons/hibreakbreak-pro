@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pie Pro</string>
+    <string name="description">Right-edge pie for the HiBreak: back, home, recents and app shortcuts, drawn without animation.</string>
+</resources>

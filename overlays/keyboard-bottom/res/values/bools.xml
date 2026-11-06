@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Read only at boot from the system image: no effect as a runtime overlay (tested). Kept for a ROM build. -->
+    <bool name="config_hideNavBarForKeyboard">true</bool>
+</resources>

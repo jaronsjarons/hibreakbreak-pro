@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Keyboard reaches the bottom of the screen (owner request, Oct 12 2026): hide the gesture
+     navigation bar strip (with the down-arrow) while the keyboard is shown. Platform-signed RRO.
+     Revert: adb shell cmd overlay disable com.hibreak.overlay.keyboardbottom -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hibreak.overlay.keyboardbottom" android:versionCode="4" android:versionName="4">
+    <overlay android:targetPackage="android" android:priority="100" />
+    <application android:hasCode="false" android:label="HiBreak keyboard to bottom" />
+</manifest>

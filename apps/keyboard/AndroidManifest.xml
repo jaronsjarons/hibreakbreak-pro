@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="local.claude.keyboard" android:versionCode="10" android:versionName="10">
+    <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="35" />
+    <!-- Keep GPU drawing: with software drawing the HiBreak's vendor HWC skipped every keyboard frame ("No dirty region",
+         dirty ratio 0), so the panel froze while typing (Oct 23). -->
+    <application android:label="Fast Keys" android:icon="@mipmap/ic_launcher" android:allowBackup="false">
+        <service android:name=".FastIME" android:label="Fast Keys" android:exported="true"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+        </service>
+        <activity android:name=".SetupActivity" android:exported="true" android:label="Fast Keys"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

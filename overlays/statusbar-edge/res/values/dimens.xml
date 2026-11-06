@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rounded_corner_content_padding">0dp</dimen>
+    <dimen name="status_bar_padding_end">0dp</dimen>
+    <!-- v3 (owner, Oct 20 2026): text and icons ~15% larger; bar stays 28dp. Stock values in comments. -->
+    <dimen name="status_bar_clock_size">16sp</dimen>              <!-- 14sp; v4 tried 18sp, v7 back to 16sp (owner) -->
+    <dimen name="status_bar_icon_size_sp">25sp</dimen>            <!-- 22sp (from android) -->
+    <dimen name="status_bar_icon_size">25dp</dimen>               <!-- 22dp (from android) -->
+    <dimen name="status_bar_battery_icon_height">15sp</dimen>     <!-- 13sp -->
+    <dimen name="status_bar_battery_icon_width">9sp</dimen>       <!-- 7.8sp -->
+    <dimen name="status_bar_wifi_signal_size">17sp</dimen>        <!-- 15sp -->
+    <dimen name="signal_icon_size">17dp</dimen>                   <!-- 15dp -->
+</resources>

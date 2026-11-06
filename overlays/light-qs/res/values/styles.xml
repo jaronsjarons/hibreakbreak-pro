@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SystemUI's own Theme.SystemUI.QuickSettings, items unchanged, parent dark -> light
+     DeviceDefault, shade colours fixed to black on white for e-ink. -->
+<resources xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+    xmlns:sysuiprv="http://schemas.android.com/apk/prv/res/com.android.systemui">
+    <style name="Theme.SystemUI.QuickSettings" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:colorBackground">?sysuiprv:attr/surfaceBright</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:itemTextAppearance">@sysuiprv:style/Control.MenuItem</item>
+        <item name="android:homeAsUpIndicator">@sysuiprv:drawable/ic_arrow_back</item>
+        <item name="android:colorError">@androidprv:color/error_color_material_light</item>
+        <item name="sysuiprv:darkIconTheme">@sysuiprv:style/QSIconTheme</item>
+        <item name="sysuiprv:isQsTheme">true</item>
+        <item name="sysuiprv:lightIconTheme">@sysuiprv:style/QSIconTheme</item>
+        <item name="sysuiprv:onShadeActive">#FFFFFFFF</item>
+        <item name="sysuiprv:onShadeActiveVariant">#FFDDDDDD</item>
+        <item name="sysuiprv:onShadeInactive">#FF000000</item>
+        <item name="sysuiprv:onShadeInactiveVariant">#FF333333</item>
+        <item name="sysuiprv:onSurface">#FF000000</item>
+        <item name="sysuiprv:onSurfaceVariant">#FF333333</item>
+        <item name="sysuiprv:outline">?androidprv:attr/materialColorOutline</item>
+        <item name="sysuiprv:primary">?androidprv:attr/materialColorPrimary</item>
+        <item name="sysuiprv:scHigh">?androidprv:attr/materialColorSurfaceContainerHigh</item>
+        <item name="sysuiprv:shadeActive">#FF000000</item>
+        <item name="sysuiprv:shadeDisabled">#FFF6F6F6</item>
+        <item name="sysuiprv:shadeInactive">#FFEEEEEE</item>
+        <item name="sysuiprv:surfaceBright">?androidprv:attr/materialColorSurfaceBright</item>
+        <item name="sysuiprv:tertiary">?androidprv:attr/materialColorTertiary</item>
+        <item name="sysuiprv:underSurface">#FFFFFFFF</item>
+        <!-- Fixed black-on-white values: dynamic colour (Monet) re-applies the framework
+             shade colours above any app overlay at boot, so the QS theme uses literals. -->
+        <item name="android:textColorPrimary">#FF000000</item>
+        <item name="android:textColorSecondary">#FF333333</item>
+    </style>
+</resources>

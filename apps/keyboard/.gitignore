@@ -1,0 +1,19 @@
+# Build output and signing keys (never publish keys)
+out/
+out-release/
+keys/
+*.p12
+*.jks
+*.keystore
+*.idsig
+# This phone's adb serial for install.sh / tools/speedtest.sh
+device.local
+# Dev logs and typing/touch tests from the owner's phone
+freeze-*/
+touch-test-*/
+speed-stages-*.txt
+*.log
+logcat*.txt
+# Large download, rebuildable from the URL in tools/make_next.py
+dict-source/tatoeba_eng_sentences.tsv.bz2
+.DS_Store
