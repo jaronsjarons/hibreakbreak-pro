@@ -34,6 +34,23 @@ Makes the **Bigme HiBreak Pro** (black and white e-ink phone) nicer to use on **
 
 See [docs/CHANGELOG.md](docs/CHANGELOG.md) for details.
 
+## Just want the apps?
+
+Six of the apps are normal Android apps and don't need the ROM. Download them one by one from the [Releases page](https://github.com/jaronsjarons/hibreakbreak-pro/releases/latest) and install them:
+
+| App | File | Needs |
+|---|---|---|
+| HiBreak Launcher | `HiBreak-Launcher-…apk` | Android 10+ |
+| Fast Keys (keyboard) | `Fast-Keys-…apk` | Android 10+ |
+| Pie Pro (edge navigation) | `Pie-Pro-…apk` | Android 11+, turn it on in Settings → Accessibility |
+| Fast Cam | `Fast-Cam-…apk` | Android 10+ (the extra photo modes only on MediaTek phones like the HiBreak Pro) |
+| Crop | `Crop-…apk` | Android 10+ |
+| Read aloud | `Read-Aloud-…apk` | Android 10+, uses your phone's text-to-speech engine |
+
+The e-ink controller and Sleep images are part of the system, so they only work with the full ROM. The apps have only been tested on the ROM so far; tell us if they work on Bigme's own Android.
+
+**Updates:** with [Obtainium](https://github.com/ImranR98/Obtainium), add `https://github.com/jaronsjarons/hibreakbreak-pro` and filter by the app's file name (for example `Fast-Keys`). It then updates the app whenever there's a new release.
+
 ## Install
 
 Follow **[docs/INSTALL-LIKE-IM-5.md](docs/INSTALL-LIKE-IM-5.md)**. In short:
