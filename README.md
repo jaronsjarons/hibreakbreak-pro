@@ -36,16 +36,20 @@ See [docs/CHANGELOG.md](docs/CHANGELOG.md) for details.
 
 ## Just want the apps?
 
-Six of the apps are normal Android apps and don't need the ROM. Download them one by one from the [Releases page](https://github.com/jaronsjarons/hibreakbreak-pro/releases/latest) and install them:
+Six of the apps are normal Android apps and don't need the ROM.
 
-| App | File | Needs |
-|---|---|---|
-| HiBreak Launcher | `HiBreak-Launcher-…apk` | Android 10+ |
-| Fast Keys (keyboard) | `Fast-Keys-…apk` | Android 10+ |
-| Pie Pro (edge navigation) | `Pie-Pro-…apk` | Android 11+, turn it on in Settings → Accessibility |
-| Fast Cam | `Fast-Cam-…apk` | Android 10+ (the extra photo modes only on MediaTek phones like the HiBreak Pro) |
-| Crop | `Crop-…apk` | Android 10+ |
-| Read aloud | `Read-Aloud-…apk` | Android 10+, uses your phone's text-to-speech engine |
+**[Download all six apps (zip)](https://github.com/jaronsjarons/hibreakbreak-pro/releases/latest/download/HiBreakBreak-Pro-Apps.zip)**
+
+Or tap an app below to download just that one, then open the file on your phone to install it:
+
+| App | Needs |
+|---|---|
+| [HiBreak Launcher](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/HiBreak-Launcher-0.1.0.apk) | Android 10+ |
+| [Fast Keys](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Keys-0.1.0.apk) (keyboard) | Android 10+ |
+| [Pie Pro](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Pie-Pro-0.1.0.apk) (edge navigation) | Android 11+, turn it on in Settings → Accessibility |
+| [Fast Cam](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Cam-0.1.0.apk) | Android 10+ (the extra photo modes only on MediaTek phones like the HiBreak Pro) |
+| [Crop](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Crop-0.1.0.apk) | Android 10+ |
+| [Read aloud](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Read-Aloud-0.1.0.apk) | Android 10+, uses your phone's text-to-speech engine |
 
 The e-ink controller and Sleep images are part of the system, so they only work with the full ROM. The apps have only been tested on the ROM so far; tell us if they work on Bigme's own Android.
 
