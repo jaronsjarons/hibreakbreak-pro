@@ -20,7 +20,7 @@ The apps were tested with the ROM, so I can't vouch for how they run on stock.
 Compared to Bigme's own software:
 
 - **Android 15** (vbbot's Evolution X), and none of Bigme's own apps.
-- **E-ink controller:** refresh mode per app (Extreme by default), automatic fast mode while typing, quick full refresh, image tone controls, and a white screen when you power off.
+- **E-ink controller:** refresh mode per app (Normal by default; switch any app to Extreme for speed), automatic fast mode while typing, quick full refresh, image tone controls, and a white screen when you power off.
 - **The screen cleans itself** after scrolling and after you close the notification shade.
 - **Side buttons:** top press cleans the screen, bottom press turns the front light on/off, hold either one for the e-ink settings. The brightness slider in quick settings controls the front light.
 - **Sleep images:** your own picture stays on the screen while the phone sleeps.
@@ -55,7 +55,7 @@ Or tap an app below to download just that one, then open the file on your phone 
 |---|---|
 | [HiBreak Launcher](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/HiBreak-Launcher-0.1.0.apk) | Android 10+ |
 | [Fast Keys](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Keys-0.1.0.apk) (keyboard) | Android 10+ |
-| [Pie Pro](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Pie-Pro-0.1.0.apk) (edge navigation) | Android 11+, turn it on in Settings → Accessibility |
+| [Pie Pro](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.2/Pie-Pro-0.1.2.apk) (edge navigation) | Android 11+, turn it on in Settings → Accessibility |
 | [Fast Cam](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Cam-0.1.0.apk) | Android 10+ (the extra photo modes only on MediaTek phones like the HiBreak Pro) |
 | [Crop](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Crop-0.1.0.apk) | Android 10+ |
 | [Read aloud](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Read-Aloud-0.1.0.apk) | Android 10+, uses your phone's text-to-speech engine |

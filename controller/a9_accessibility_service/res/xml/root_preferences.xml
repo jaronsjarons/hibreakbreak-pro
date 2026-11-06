@@ -5,7 +5,7 @@
     <SeekBarPreference app:key="default_image_contrast" app:title="Default image contrast" app:summary="Applies to apps using the default. 0 is unchanged. Higher values can hide gray detail." app:defaultValue="0" app:min="0" android:max="99" app:showSeekBarValue="true" />
 
     <SeekBarPreference app:key="default_grey_darkness" app:title="Default grey darkness" app:summary="Makes greys darker while white stays white (helps light-grey keyboard symbols). 0 is unchanged." app:defaultValue="0" app:min="0" android:max="99" app:showSeekBarValue="true" />
-    <ListPreference app:key="refresh_setting" app:title="Default display speed" app:useSimpleSummaryProvider="true" app:entries="@array/refresh_options" app:entryValues="@array/refresh_values" app:defaultValue="3" />
+    <ListPreference app:key="refresh_setting" app:title="Default display speed" app:useSimpleSummaryProvider="true" app:entries="@array/refresh_options" app:entryValues="@array/refresh_values" app:defaultValue="1" />
     <SwitchPreferenceCompat app:key="fast_keyboard_refresh" app:title="Fast keyboard" app:summary="Use a fast display mode while the keyboard is visible. Restore the app's display mode when it closes." app:defaultValue="true" />
     <ListPreference app:key="fast_keyboard_mode" app:title="Keyboard display mode" app:useSimpleSummaryProvider="true" app:entries="@array/fast_keyboard_mode_entries" app:entryValues="@array/fast_keyboard_mode_values" app:defaultValue="3" app:dependency="fast_keyboard_refresh" />
     <ListPreference app:key="clean_after_scroll_v2" app:title="Clean after scrolling" app:useSimpleSummaryProvider="true" app:entries="@array/clean_after_scroll_entries" app:entryValues="@array/clean_after_scroll_values" app:defaultValue="off" />

@@ -34,7 +34,7 @@ class RefreshModeManager(
     private var currentClassifier = ""
 
     // Extreme by default for every app (owner, Nov 6 2026); per-app choices and the setting still override it.
-    private fun defaultRefreshMode() = sharedPreferences.getString("refresh_setting", "3")
+    private fun defaultRefreshMode() = sharedPreferences.getString("refresh_setting", "1")
         ?.toIntOrNull()?.takeIf { it in 0..4 } ?: RefreshMode.SPEED.mode
     fun onAppChange(packageName: String) = packageName.run {
         if (this != currentClassifier) {

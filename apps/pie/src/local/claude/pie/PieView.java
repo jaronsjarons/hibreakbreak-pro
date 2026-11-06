@@ -50,8 +50,18 @@ final class PieView extends View {
         invalidate();
     }
 
-    void show(int y) { open = true; centerY = y; selected = NONE; invalidate(); }
-    void hide() { open = false; selected = NONE; invalidate(); }
+    void show(int y) { tellEink(true); open = true; centerY = y; selected = NONE; invalidate(); }
+    void hide() { tellEink(false); open = false; selected = NONE; invalidate(); }
+
+    /** Tells the HiBreakBreak Pro e-ink controller (if installed) that the pie opened or closed, so it can pause the
+     *  screen driver's auto clean meanwhile: that clean keeps the CPU busy and made the pie lag. No-op elsewhere. */
+    private void tellEink(boolean nowOpen) {
+        if (nowOpen == open) return;
+        try {
+            getContext().sendBroadcast(new android.content.Intent("local.claude.pie.PIE_OPEN")
+                    .setPackage("com.lmqr.ha9_comp_service").putExtra("open", nowOpen));
+        } catch (RuntimeException ignored) { }
+    }
     boolean isOpen() { return open; }
     int selected() { return selected; }
 

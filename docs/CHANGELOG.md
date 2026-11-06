@@ -2,6 +2,16 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.2 (November 2026)
+
+The phone felt slower and ghostier on a fresh install than on the author's own phone. The difference was settings, so the author's tuned settings are now the defaults.
+
+- **Faster typing and Pie.** In Extreme, the screen driver's automatic clean keeps about two CPU cores busy. It now pauses while the keyboard is up or the Pie Pro pie is open, and comes back as soon as they close.
+- **Normal is the default mode again** (was Extreme). Extreme left white ghosting, especially in menus, and kept the driver's clean busy all the time. Normal looks clean and leaves the CPU free. Switch any app you want faster to Extreme in the e-ink menu; the keyboard still switches to Extreme by itself while you type.
+- **Darker greys by default** (grey darkness 41), anti-flicker off, and a short press of either side button while the screen is off does a clean refresh.
+- **Pie Pro 0.1.2** tells the e-ink controller when the pie opens and closes. Without HiBreakBreak Pro it does nothing different.
+- These defaults only fill in settings you never changed. Your own choices are kept.
+
 ## 0.1.1 (November 2026)
 
 - **Fixed: the screen could ghost much more.** The e-ink controller switched on the screen driver's automatic clean only once, when it started. If that didn't reach the driver, the clean stayed off (found off on the author's phone). It is now switched on again every time the screen wakes up, and twice more after the phone starts.

@@ -22,8 +22,37 @@ class DisplaySettingsManager(
         get() = sharedPreferences.getBoolean(PREF_AUTO_REFRESH, true)
         set(value) {
             sharedPreferences.edit().putBoolean(PREF_AUTO_REFRESH, value).apply()
-            commandRunner.runCommands(arrayOf(if (value) "au_br1" else "au_br0"))
+            sendAutoRefresh()
         }
+
+    // The driver's auto clean keeps about two CPU cores busy at real-time priority while the screen is on
+    // (measured Nov 6 2026), which made Fast Keys' suggestions lag. So it pauses while the keyboard is up
+    // and comes back (and cleans up) as soon as the keyboard closes.
+    private var keyboardVisible = false
+
+    fun setKeyboardVisible(visible: Boolean) {
+        if (visible == keyboardVisible) return
+        keyboardVisible = visible
+        sendAutoRefresh()
+    }
+
+    // Same while Pie Pro's pie is open. Never paused for more than 5 s, in case the "closed" message is lost.
+    private var pieOpen = false
+    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val pieTimeout = Runnable { setPieOpen(false) }
+
+    fun setPieOpen(open: Boolean) {
+        handler.removeCallbacks(pieTimeout)
+        if (open) handler.postDelayed(pieTimeout, 5_000L)
+        if (open == pieOpen) return
+        pieOpen = open
+        sendAutoRefresh()
+    }
+
+    private fun sendAutoRefresh() {
+        val on = isAutoRefreshEnabled && !keyboardVisible && !pieOpen
+        commandRunner.runCommands(arrayOf(if (on) "au_br1" else "au_br0"))
+    }
 
     var isAntiShakeEnabled: Boolean
         get() = sharedPreferences.getBoolean(PREF_ANTI_SHAKE, true)
@@ -36,8 +65,8 @@ class DisplaySettingsManager(
      * Apply all display settings (for use on boot or service start)
      */
     fun applySettings() {
-        commandRunner.runCommands(arrayOf(if (isAutoRefreshEnabled) "au_br1" else "au_br0"))
-        
+        sendAutoRefresh()
+
         commandRunner.runCommands(arrayOf(if (isAntiShakeEnabled) "an_fl1" else "an_fl0"))
     }
 

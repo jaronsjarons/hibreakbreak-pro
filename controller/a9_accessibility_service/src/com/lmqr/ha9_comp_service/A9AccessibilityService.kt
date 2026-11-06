@@ -41,6 +41,8 @@ import com.lmqr.ha9_comp_service.command_runners.UnixSocketCommandRunner
 import kotlin.math.max
 
 
+private const val PIE_OPEN_ACTION = "local.claude.pie.PIE_OPEN"
+
 class A9AccessibilityService : AccessibilityService(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     companion object { var connected: A9AccessibilityService? = null; private set }
@@ -96,6 +98,11 @@ class A9AccessibilityService : AccessibilityService(),
                     keyboardModeObserver.start()
                 }
             }
+        }
+    }
+    private val pieReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (::displaySettingsManager.isInitialized) displaySettingsManager.setPieOpen(intent.getBooleanExtra("open", false))
         }
     }
     private val receiverEink: BroadcastReceiver = object : BroadcastReceiver() {
@@ -167,6 +174,19 @@ class A9AccessibilityService : AccessibilityService(),
                 .putString("long_press_eink_action", "open_menu")
                 .putBoolean("hibreak_buttons_v8_configured", true).apply()
         }
+        // The author's own tuned settings as defaults (Nov 6 2026). On a fresh install the phone felt much worse
+        // than the author's: Settings in Extreme left white ghosting in its menus, and greys were too light.
+        // Only keys never set are filled in, once, so anyone's own choices are kept.
+        if (!sharedPreferences.getBoolean("hibreak_tuned_defaults_v1", false)) {
+            val edit = sharedPreferences.edit()
+            fun fill(key: String, put: () -> Unit) { if (!sharedPreferences.contains(key)) put() }
+            fill("package:com.android.settings") { edit.putInt("package:com.android.settings", RefreshMode.BALANCED.mode) }
+            fill(ImageToneManager.DEFAULT_DARKNESS) { edit.putInt(ImageToneManager.DEFAULT_DARKNESS, 41) }
+            fill("anti_shake_enabled") { edit.putBoolean("anti_shake_enabled", false) }
+            fill("single_press_eink_action_screen_off") { edit.putString("single_press_eink_action_screen_off", "clear") }
+            fill("top_single_press_eink_action_screen_off") { edit.putString("top_single_press_eink_action_screen_off", "clear") }
+            edit.putBoolean("hibreak_tuned_defaults_v1", true).apply()
+        }
         // Camera, Oct 25 2026: with the keyboard up, Extreme typed as fast as Hyper (median echo
         // 274 vs 288 ms) and scrolled more smoothly, with about half the ghosting. Apply once; a
         // later choice of Hyper in Settings is kept.
@@ -229,6 +249,7 @@ class A9AccessibilityService : AccessibilityService(),
         connected = this
         keyboardModeObserver = KeyboardModeObserver(this) { visible ->
             refreshModeManager.setKeyboardVisible(visible)
+            displaySettingsManager.setKeyboardVisible(visible)
             menuBinding.updateButtons(refreshModeManager.currentMode)
         }
 
@@ -241,6 +262,9 @@ class A9AccessibilityService : AccessibilityService(),
             fullRefresh.cancel(); shadeRefresh.cancel(); scrollClean.stop(); menuBinding.close()
         }
         registerReceiver(shutdownWhite, IntentFilter(Intent.ACTION_SHUTDOWN))
+        // Pie Pro says when its pie is open, so the driver's auto clean can pause meanwhile (it costs about two
+        // CPU cores). Worst case a stranger's broadcast only pauses cleaning; it resumes by itself after 5 s.
+        registerReceiver(pieReceiver, IntentFilter(PIE_OPEN_ACTION), RECEIVER_EXPORTED)
 
         val filterEink = IntentFilter()
         filterEink.addAction("EINK_FORCE_CLEAR")
@@ -473,6 +497,7 @@ class A9AccessibilityService : AccessibilityService(),
         unregisterReceiver(receiverEink)
         if (!BuildConfig.PUBLIC_RELEASE) unregisterReceiver(flashTest)
         unregisterReceiver(shutdownWhite)
+        unregisterReceiver(pieReceiver)
         menuBinding?.let { if(it.root.isAttachedToWindow) getSystemService(WindowManager::class.java).removeView(it.root) }
         menuBinding = null
         super.onDestroy()
