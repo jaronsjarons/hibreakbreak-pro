@@ -90,6 +90,9 @@ class A9AccessibilityService : AccessibilityService(),
                     imageToneManager.apply()
                     refreshModeManager.applyMode()
                     brightnessManager.applyBrightness()
+                    // Re-send the driver's auto clean (clean_a2) on every wake. It was sent only once at
+                    // service start, and found off on the owner's phone (Nov 6 2026): much more ghosting.
+                    displaySettingsManager.applySettings()
                     keyboardModeObserver.start()
                 }
             }
@@ -179,6 +182,16 @@ class A9AccessibilityService : AccessibilityService(),
                         "\"android.theme.customization.system_palette\":\"333333\",\"android.theme.customization.accent_color\":\"333333\"}")
             } catch (e: Exception) { Log.w("HiBreakDefaults", "first-run look not applied", e) }
             sharedPreferences.edit().putBoolean("refresh_prince_look_v1", true).apply()
+        }
+        // Auto-rotate off by default (owner, Nov 6 2026: "I literally never want this"). Once only, so
+        // anyone who turns it back on in Settings keeps it.
+        if (!sharedPreferences.getBoolean("hibreak_no_autorotate_v1", false)) {
+            try {
+                android.provider.Settings.System.putInt(contentResolver, "accelerometer_rotation", 0)
+                android.provider.Settings.System.putInt(contentResolver, "user_rotation", 0)
+                android.provider.Settings.Secure.putInt(contentResolver, "show_rotation_suggestions", 0)
+            } catch (e: Exception) { Log.w("HiBreakDefaults", "auto-rotate default not applied", e) }
+            sharedPreferences.edit().putBoolean("hibreak_no_autorotate_v1", true).apply()
         }
         if (!sharedPreferences.getBoolean("hibreak_kb_extreme_v1", false)) {
             val edit = sharedPreferences.edit().putBoolean("hibreak_kb_extreme_v1", true)
@@ -487,6 +500,11 @@ class A9AccessibilityService : AccessibilityService(),
                 }, 500)
             }, 500)
         }, 1000)
+        // At boot the e-ink server can start after this service, and the one-time write above is then
+        // lost (no retry), leaving clean_a2 off. Send it again once the server is surely up.
+        for (delay in longArrayOf(15_000L, 45_000L)) {
+            handler.postDelayed({ if (isScreenOn) displaySettingsManager.applySettings() }, delay)
+        }
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {

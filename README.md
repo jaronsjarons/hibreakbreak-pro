@@ -26,6 +26,7 @@ Compared to Bigme's own software:
 - **Sleep images:** your own picture stays on the screen while the phone sleeps.
 - **Light mode everything:** white notification shade, quick settings and status bar.
 - **Boot screen:** a full-screen black and white pattern.
+- **Auto-rotate off** by default. You can turn it back on in Settings.
 - **No swiping lock screen,** because of ghosting issues. You can turn it back on in Settings, or set a PIN.
 - **Optional (root):** extra fonts (Atkinson Hyperlegible Next, Lexend, Literata).
 

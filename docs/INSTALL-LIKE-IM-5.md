@@ -32,7 +32,7 @@ Your phone is like a house.
 - **Android platform tools** (the programs `adb` and `fastboot`). Get them from Google: <https://developer.android.com/tools/releases/platform-tools>
 - The **HiBreak Evolution X** image (May 7, 2025) from vbbot: <https://github.com/vbbot/HibreakProPatchingService/releases>. The patcher checks the download for you; for reference, the SHA-256 of `evolution_arm64_bgN-10.5-unofficial-20250507.img.xz` is `6ff4357e8055c513f90ae9f54fa256afab1c4b94285dd01cd599f952a25f3df6`.
 - The **stock `vbmeta.img`** from Bigme's firmware for your phone. It's inside Bigme's full update file (`payload.bin`); unpack it with a payload dumper, as described in vbbot's guide. Tested only with firmware **3.1.6** (`B651_NO_EEA_M2_3.1.6`). ⚠️ If yours is different, ask first.
-- From the HiBreakBreak Pro **Releases** page: `hibreakbreak-pro-0.1.0-patcher.zip` (the patcher and its files, for Step 5) and `hibreakbreak-pro-0.1.0-apps.zip` (apps and installer, for Step 7).
+- From the HiBreakBreak Pro **Releases** page: `hibreakbreak-pro-0.1.1-patcher.zip` (the patcher and its files, for Step 5) and `hibreakbreak-pro-0.1.1-apps.zip` (apps and installer, for Step 7).
 - About an hour, and some patience.
 
 ## Step 1: Back up
@@ -97,13 +97,13 @@ fastboot flash vbmeta --disable-verity --disable-verification vbmeta.img
 
 ## Step 5: Put the new Android on
 
-1. Unzip `hibreakbreak-pro-0.1.0-patcher.zip`, then add HiBreakBreak Pro to the Evolution X file with the patcher (it checks the download for you):
+1. Unzip `hibreakbreak-pro-0.1.1-patcher.zip`, then add HiBreakBreak Pro to the Evolution X file with the patcher (it checks the download for you):
 
    ```bash
    python3 patch_system_img.py evolution_arm64_bgN-10.5-unofficial-20250507.img.xz payload/ out/
    ```
 
-   You get a file named `hibreakbreak-pro-0.1.0-android15-<date>.img` in `out/`. That's Evolution X with HiBreakBreak Pro added; use it below.
+   You get a file named `hibreakbreak-pro-0.1.1-android15-<date>.img` in `out/`. That's Evolution X with HiBreakBreak Pro added; use it below.
 2. Go to the special flashing mode:
 
    ```bash
@@ -113,7 +113,7 @@ fastboot flash vbmeta --disable-verity --disable-verification vbmeta.img
 3. Write the new Android:
 
    ```bash
-   fastboot flash system out/hibreakbreak-pro-0.1.0-android15-<date>.img
+   fastboot flash system out/hibreakbreak-pro-0.1.1-android15-<date>.img
    ```
 
    This takes a few minutes. Don't unplug anything.
@@ -141,7 +141,7 @@ Go through the welcome screens like a new phone: Wi-Fi, Google account. Then tur
 
 ## Step 7: Add our pack
 
-1. Unzip `hibreakbreak-pro-0.1.0-apps.zip` on the computer.
+1. Unzip `hibreakbreak-pro-0.1.1-apps.zip` on the computer.
 2. In the terminal, go into that folder and run:
 
    ```bash

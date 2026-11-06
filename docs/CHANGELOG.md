@@ -2,6 +2,11 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.1 (November 2026)
+
+- **Fixed: the screen could ghost much more.** The e-ink controller switched on the screen driver's automatic clean only once, when it started. If that didn't reach the driver, the clean stayed off (found off on the author's phone). It is now switched on again every time the screen wakes up, and twice more after the phone starts.
+- **Auto-rotate is off by default.** You can still turn it on in Settings.
+
 ## 0.1.0 (November 2026)
 
 First public version. It builds on vbbot's HiBreak Evolution X (Android 15, May 7, 2025) and its e-ink controller by damianmqr.
