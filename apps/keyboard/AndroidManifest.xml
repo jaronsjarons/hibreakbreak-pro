@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="local.claude.keyboard" android:versionCode="13" android:versionName="13">
+    package="local.claude.keyboard" android:versionCode="14" android:versionName="14">
     <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="35" />
     <!-- Keep GPU drawing: with software drawing the HiBreak's vendor HWC skipped every keyboard frame ("No dirty region",
          dirty ratio 0), so the panel froze while typing (Oct 23). -->

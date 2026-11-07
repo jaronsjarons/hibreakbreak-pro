@@ -594,7 +594,7 @@ class A9AccessibilityService : AccessibilityService(),
             val switched = lastForegroundPackage != null && packageName != this.packageName
             lastForegroundPackage = packageName
             handler.removeCallbacks(appSwitchClean)
-            if (switched && sharedPreferences.getBoolean("clean_on_app_switch", false))
+            if (switched && sharedPreferences.getBoolean("clean_on_app_switch", true))
                 handler.postDelayed(appSwitchClean, sharedPreferences.getInt("switch_clean_delay_ms", 150).toLong().coerceIn(0L, 3000L))
         }
         scrollClean.onAppChange(packageName)

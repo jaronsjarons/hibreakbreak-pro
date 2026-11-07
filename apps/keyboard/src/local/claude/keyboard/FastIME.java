@@ -208,6 +208,18 @@ public final class FastIME extends InputMethodService implements KeyboardView.Li
         root.addView(strip, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         root.addView(keyboard, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         root.setClipChildren(false);   // lets the key pop-up rise over the strip
+        // Leave room for Android's navigation strip under the keyboard (Nov 2026). Without it the bottom row was
+        // drawn under the strip's hide-keyboard arrow and keyboard globe. With HiBreakBreak Pro's 'keyboard to the
+        // bottom edge' overlay the strip is 1 dp, so the keys still reach the edge.
+        root.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override public android.view.WindowInsets onApplyWindowInsets(View v, android.view.WindowInsets in) {
+                int bottom = android.os.Build.VERSION.SDK_INT >= 30
+                        ? in.getInsets(android.view.WindowInsets.Type.navigationBars()).bottom
+                        : in.getSystemWindowInsetBottom();
+                if (v.getPaddingBottom() != bottom) v.setPadding(0, 0, 0, bottom);
+                return in;
+            }
+        });
         return root;
     }
 

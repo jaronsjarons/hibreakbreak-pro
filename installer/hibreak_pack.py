@@ -42,6 +42,7 @@ PIE_NAV_OVERLAY = ('keyboardbottom.apk', 'com.hibreak.overlay.keyboardbottom')
 KEYBOARD_IME = 'local.claude.keyboard/.FastIME'
 DRY = '--dry-run' in sys.argv
 CHANGING = ('cmd uimode night no', 'settings put', 'settings delete', 'ime enable', 'ime set', 'cmd role add', 'cmd overlay enable',
+            'cmd overlay set-priority',
             'cmd overlay disable', 'cmd deviceidle whitelist +', 'cmd deviceidle whitelist -', 'appops set')
 PIE_SERVICE = 'local.claude.pie/local.claude.pie.PieService'
 CONTROLLER_SERVICE = 'com.lmqr.ha9_comp_service/com.lmqr.ha9_comp_service.A9AccessibilityService'
@@ -205,6 +206,8 @@ def install(assume_yes):
                 undo['overlays'].append({'pkg': pkg, 'new': not existed, 'was_enabled': False})
                 save()
                 phone.sh(f'cmd overlay enable {pkg}')
+                # Above the gesture-navigation overlay, so its keyboard-button setting wins (Nov 2026).
+                phone.sh(f'cmd overlay set-priority {pkg} highest')
                 print('   on (turn it off any time: python3 hibreak_pack.py undo, or Settings > Accessibility for Pie Pro)')
             else:
                 print(f'   FAILED: {message}')

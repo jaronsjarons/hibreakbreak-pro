@@ -2,6 +2,13 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.5 (November 2026)
+
+The screen and typing settings a new phone starts with are now the ones tuned on the author's phone.
+
+- **"Clean when switching apps" is on by default.** One quick white flash about 0.15 s after you open an app. Measured with a webcam: half a second after a switch, ghosting covered 17.6% of the screen without it and 4.7% with it, and nothing after 2.5 s. Turn it off in the e-ink settings if you don't like the flash.
+- **Fast Keys 0.1.5 leaves room for Android's navigation strip.** Its bottom row was drawn under the strip's hide-keyboard arrow (and the keyboard globe, with more than one keyboard). With Pie Pro as your only navigation (keyboard down to the bottom edge), the installer now also keeps those buttons out of the way.
+
 ## 0.1.4 (November 2026)
 
 Measured on the phone itself (Fast Keys and the e-ink driver both log their timings).

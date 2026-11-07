@@ -2,4 +2,9 @@
 <resources>
     <!-- Read only at boot from the system image: no effect as a runtime overlay (tested). Kept for a ROM build. -->
     <bool name="config_hideNavBarForKeyboard">true</bool>
+    <!-- Nov 2026: with the nav bar shrunk to 1 dp the keyboard reaches the bottom edge, and the keyboard's own copy of
+         Android's hide-keyboard arrow and keyboard-switch globe was drawn over its bottom row. With this false the
+         (1 dp) navigation bar draws them instead, so they are out of the way. Works at runtime (tested); the installer
+         raises this overlay's priority so the gesture-navigation overlay (which sets true) does not win. -->
+    <bool name="config_imeDrawsImeNavBar">false</bool>
 </resources>
