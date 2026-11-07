@@ -370,6 +370,7 @@ final class KeyboardView extends ViewGroup {
         switch (a) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN: {
+                Timing.down(ev.getEventTime());
                 // A new finger ends the previous finger's long-press/repeat (fast rolling typing).
                 handler.removeCallbacks(longRunnable);
                 handler.removeCallbacks(repeatRunnable);

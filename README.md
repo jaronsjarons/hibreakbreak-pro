@@ -54,7 +54,7 @@ Or tap an app below to download just that one, then open the file on your phone 
 | App | Needs |
 |---|---|
 | [HiBreak Launcher](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/HiBreak-Launcher-0.1.0.apk) | Android 10+ |
-| [Fast Keys](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Keys-0.1.0.apk) (keyboard) | Android 10+ |
+| [Fast Keys](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.4/Fast-Keys-0.1.4.apk) (keyboard) | Android 10+ |
 | [Pie Pro](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.2/Pie-Pro-0.1.2.apk) (edge navigation) | Android 11+, turn it on in Settings → Accessibility |
 | [Fast Cam](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Fast-Cam-0.1.0.apk) | Android 10+ (the extra photo modes only on MediaTek phones like the HiBreak Pro) |
 | [Crop](https://github.com/jaronsjarons/hibreakbreak-pro/releases/download/v0.1.0/Crop-0.1.0.apk) | Android 10+ |

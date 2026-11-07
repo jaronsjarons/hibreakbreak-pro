@@ -82,6 +82,7 @@ final class StripView extends LinearLayout {
                 t = t.substring(0, Math.max(0, n)) + "…";
             }
             c.drawText(t, getWidth() / 2f, getHeight() / 2f + p.getTextSize() * 0.36f, p);
+            Timing.stripDrawn();
         }
 
         @Override

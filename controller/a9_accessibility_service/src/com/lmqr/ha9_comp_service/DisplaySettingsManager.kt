@@ -50,7 +50,10 @@ class DisplaySettingsManager(
     }
 
     private fun sendAutoRefresh() {
-        val on = isAutoRefreshEnabled && !keyboardVisible && !pieOpen
+        // Measured Nov 6 2026: pausing the clean while typing made typing no faster (letter ~40 ms either way) but left
+        // more ghosting, so it stays on by default. Hidden pref pause_clean_for_keyboard=true pauses it (saves CPU/battery).
+        val pauseForKeyboard = sharedPreferences.getBoolean("pause_clean_for_keyboard", false)
+        val on = isAutoRefreshEnabled && !(keyboardVisible && pauseForKeyboard) && !pieOpen
         commandRunner.runCommands(arrayOf(if (on) "au_br1" else "au_br0"))
     }
 

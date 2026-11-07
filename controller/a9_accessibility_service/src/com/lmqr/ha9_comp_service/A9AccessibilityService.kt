@@ -584,7 +584,9 @@ class A9AccessibilityService : AccessibilityService(),
     }
     private var lastForegroundPackage: String? = null
     private val appSwitchClean = Runnable {
-        if (isScreenOn && !refreshModeManager.isKeyboardVisible) fullRefresh.lightRefresh()
+        // Timings are hidden prefs for camera tuning (switch_clean_delay_ms / switch_clean_restore_ms).
+        if (isScreenOn && !refreshModeManager.isKeyboardVisible)
+            fullRefresh.lightRefresh(sharedPreferences.getInt("switch_clean_restore_ms", 700).toLong())
     }
 
     private fun applyForegroundPackage(packageName: String) {
@@ -593,7 +595,7 @@ class A9AccessibilityService : AccessibilityService(),
             lastForegroundPackage = packageName
             handler.removeCallbacks(appSwitchClean)
             if (switched && sharedPreferences.getBoolean("clean_on_app_switch", false))
-                handler.postDelayed(appSwitchClean, 600L)
+                handler.postDelayed(appSwitchClean, sharedPreferences.getInt("switch_clean_delay_ms", 150).toLong().coerceIn(0L, 3000L))
         }
         scrollClean.onAppChange(packageName)
         refreshModeManager.onAppChange(packageName)

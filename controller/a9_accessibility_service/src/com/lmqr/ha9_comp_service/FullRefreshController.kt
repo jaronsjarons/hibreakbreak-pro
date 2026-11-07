@@ -51,7 +51,7 @@ class FullRefreshController(private val service: A9AccessibilityService,
      * Shorter clean for after scrolling: clean waveform (HD), one white frame, then the
      * content is redrawn in the clean mode before the app's own mode is restored.
      */
-    fun lightRefresh() {
+    fun lightRefresh(restoreMs: Long = 1600L) {
         if (running || !service.getSystemService(android.os.PowerManager::class.java).isInteractive) return
         running = true
         commands.runCommands(arrayOf("s"))
@@ -66,7 +66,7 @@ class FullRefreshController(private val service: A9AccessibilityService,
                 overlay = view
                 handler.postDelayed({ removeOverlay() },300)
                 // Mode only: the image tone was never changed for a quick clean.
-                handler.postDelayed({ running=false;restoreMode() },1600)
+                handler.postDelayed({ running=false;restoreMode() },restoreMs.coerceIn(400L, 3000L))
             } catch(e: Exception) { cancel();restore() }
         },120)
     }

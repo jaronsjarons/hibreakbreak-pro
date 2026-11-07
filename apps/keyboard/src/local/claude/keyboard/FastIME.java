@@ -391,7 +391,21 @@ public final class FastIME extends InputMethodService implements KeyboardView.Li
         public void run() { if (suggestionsPending) { suggestionsPending = false; showSuggestions(); } }
     };
 
-    private static final int STRIP_PAUSE_MS = 150;
+    // 150 ms until Nov 6 2026. Measured on the phone at ~3 keys/s: 40 ms shows the suggestions in the same panel
+    // update as the letter (97 vs 219 ms after the touch), letter not slower, no extra updates. 0 ms made the letter
+    // slower (busier panel). Hidden test override: adb shell setprop debug.fastkeys.strip_ms <ms>
+    private static final int STRIP_PAUSE_DEFAULT_MS = 40;
+    private static int stripPauseMs() {
+        try {
+            String s = sysprop("debug.fastkeys.strip_ms");
+            if (s == null || s.isEmpty()) return STRIP_PAUSE_DEFAULT_MS;
+            int v = Integer.parseInt(s);
+            return Math.max(0, Math.min(400, v));
+        } catch (Exception e) { return STRIP_PAUSE_DEFAULT_MS; }
+    }
+    private static String sysprop(String key) throws Exception {
+        return (String) Class.forName("android.os.SystemProperties").getMethod("get", String.class).invoke(null, key);
+    }
 
     /**
      * The strip waits for a pause in typing: while you type fast it stays still, so each key is one panel update
@@ -400,7 +414,7 @@ public final class FastIME extends InputMethodService implements KeyboardView.Li
     private void requestSuggestions() {
         suggestionsPending = true;
         main.removeCallbacks(suggestionsRunnable);
-        main.postDelayed(suggestionsRunnable, STRIP_PAUSE_MS);
+        main.postDelayed(suggestionsRunnable, stripPauseMs());
     }
 
     private void flushSuggestions() {

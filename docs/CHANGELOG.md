@@ -2,6 +2,14 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.4 (November 2026)
+
+Measured on the phone itself (Fast Keys and the e-ink driver both log their timings).
+
+- **Fast Keys 0.1.4: suggestions about twice as fast.** Fast Keys waited 150 ms after each key before showing suggestions. It now waits 40 ms, so the suggestions appear in the same screen update as the letter: about 0.1 s after the touch instead of 0.22 s. The letter itself is not slower.
+- **The automatic clean stays on while you type.** Pausing it (0.1.2) made typing no faster: a letter reaches the screen in about 40 ms either way. It only left more ghosting behind.
+- **"Clean when switching apps" is quicker** (still off by default): it now cleans about 0.15 s after the switch and hands the screen back to the fast mode sooner.
+
 ## 0.1.3 (November 2026)
 
 Found with a webcam pointed at the phone.
