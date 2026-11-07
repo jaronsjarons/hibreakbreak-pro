@@ -2,6 +2,14 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.3 (November 2026)
+
+Found with a webcam pointed at the phone.
+
+- **Fixed: ghosting that followed you from app to app.** After typing, the outlines of the keyboard's keys stayed on the screen as a grid of faint lines, in every app, until a full refresh. The screen now does one quick clean when the keyboard closes. You can turn it off in the e-ink settings ("Clean when the keyboard closes").
+- **Measured: typing no longer competes with the screen driver.** While typing in the fast keyboard mode, the driver's automatic clean used about 1.8 CPU cores; it is paused while the keyboard is up (since 0.1.2) and that is now confirmed at 0.
+- **New option, off by default:** "Clean when switching apps" does one quick flash after each app switch.
+
 ## 0.1.2 (November 2026)
 
 The phone felt slower and ghostier on a fresh install than on the author's own phone. The difference was settings, so the author's tuned settings are now the defaults.

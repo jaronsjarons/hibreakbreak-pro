@@ -14,8 +14,8 @@ android {
         // -Ppublic=true: the public release (no adb test hook, no owner-specific defaults).
         val public = (project.findProperty("public") as String?) == "true"
         if (public) {
-            versionCode = 90
-            versionName = "hibreak-eink-0.1.11"
+            versionCode = 95
+            versionName = "hibreak-eink-0.1.15"
         }
         buildConfigField("boolean", "PUBLIC_RELEASE", public.toString())
     }

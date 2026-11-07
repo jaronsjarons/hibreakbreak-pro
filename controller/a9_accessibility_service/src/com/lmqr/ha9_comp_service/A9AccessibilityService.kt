@@ -250,6 +250,11 @@ class A9AccessibilityService : AccessibilityService(),
         keyboardModeObserver = KeyboardModeObserver(this) { visible ->
             refreshModeManager.setKeyboardVisible(visible)
             displaySettingsManager.setKeyboardVisible(visible)
+            // The keyboard's key outlines stayed on screen as a grid of ghost lines in every app after
+            // typing (camera, Nov 6 2026): Normal mode only redraws changed pixels. Clean once when it closes.
+            handler.removeCallbacks(keyboardClosedClean)
+            if (!visible && sharedPreferences.getBoolean("clean_after_keyboard", true))
+                handler.postDelayed(keyboardClosedClean, 400L)
             menuBinding.updateButtons(refreshModeManager.currentMode)
         }
 
@@ -570,7 +575,26 @@ class A9AccessibilityService : AccessibilityService(),
         catch (_: RuntimeException) { null }
     }
 
+    // One quick white clean shortly after switching apps (Nov 6 2026): the old app's picture was left as
+    // ghosting on the new one. Waits until the switch settles; skipped while typing. Setting: clean_on_app_switch.
+    private val keyboardClosedClean = Runnable {
+        if (!isScreenOn || refreshModeManager.isKeyboardVisible) return@Runnable
+        if (sharedPreferences.getString(ScrollClean.PREF_STYLE, "light") == "full") clearScreen("keyboard-closed")
+        else fullRefresh.lightRefresh()
+    }
+    private var lastForegroundPackage: String? = null
+    private val appSwitchClean = Runnable {
+        if (isScreenOn && !refreshModeManager.isKeyboardVisible) fullRefresh.lightRefresh()
+    }
+
     private fun applyForegroundPackage(packageName: String) {
+        if (packageName != lastForegroundPackage) {
+            val switched = lastForegroundPackage != null && packageName != this.packageName
+            lastForegroundPackage = packageName
+            handler.removeCallbacks(appSwitchClean)
+            if (switched && sharedPreferences.getBoolean("clean_on_app_switch", false))
+                handler.postDelayed(appSwitchClean, 600L)
+        }
         scrollClean.onAppChange(packageName)
         refreshModeManager.onAppChange(packageName)
         imageToneManager.onAppChange(packageName)

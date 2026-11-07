@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROM = Path(__file__).resolve().parents[2]
 DEFAULTS = {
-    'controller': ROM / 'artifacts/controller-v90-public/controller-v90-public.apk',
+    'controller': ROM / 'artifacts/controller-v95-public/controller-v95-public.apk',
     'daemon': ROM / 'artifacts/native-refresh/hibreak-control-arm64',
     'daemon_rc': ROM / 'artifacts/native-refresh/a9_eink_daemon-refresh.rc',
     'doze_overlay': ROM / 'artifacts/bird-doze-overlay/bird-doze-boot.apk',
@@ -165,9 +165,9 @@ def main():
                         'base_sha256': hashlib.sha256(stock_file(dest)).hexdigest()})
     release = not problems
     payload = {
-        'name': 'HiBreakBreak Pro', 'version': '0.1.2' + ('' if release else '-test'),
+        'name': 'HiBreakBreak Pro', 'version': '0.1.3' + ('' if release else '-test'),
         'release': release, 'not_release_reasons': problems, 'base': BASE,
-        'output_name': 'hibreakbreak-pro-0.1.2-android15-' + datetime.date.today().strftime('%Y%m%d')
+        'output_name': 'hibreakbreak-pro-0.1.3-android15-' + datetime.date.today().strftime('%Y%m%d')
                        + ('' if release else '-TEST-NOT-FOR-RELEASE') + '.img',
         'props': [{'dest': '/system/build.prop', 'key': 'ro.adb.secure', 'from': '0', 'to': '1', 'count': 3,
                    'why': 'USB debugging asks before a computer may connect'}],

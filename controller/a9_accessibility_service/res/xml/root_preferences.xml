@@ -12,6 +12,8 @@
     <SwitchPreferenceCompat app:key="live_scroll_reading" app:title="Live scrolling in reading apps" app:summary="Keeps the screen following continuous scrolling in readers such as ReadEra, whose frames the display would otherwise skip." app:defaultValue="true" />
     <SwitchPreferenceCompat app:key="clean_after_touch_reading" app:title="Clean after touches in reading apps" app:summary="For readers that never report scrolling (such as ReadEra). Also flashes after menu taps." app:defaultValue="false" />
     <ListPreference app:key="clean_style" app:title="Cleaning flash" app:useSimpleSummaryProvider="true" app:entries="@array/clean_style_entries" app:entryValues="@array/clean_style_values" app:defaultValue="light" />
+    <SwitchPreferenceCompat app:key="clean_after_keyboard" app:title="Clean when the keyboard closes" app:summary="One quick flash when the keyboard goes away, so its keys do not stay behind as a grid of lines." app:defaultValue="true" />
+    <SwitchPreferenceCompat app:key="clean_on_app_switch" app:title="Clean when switching apps" app:summary="One quick white flash after you switch apps, so the last app does not stay behind as ghosting." app:defaultValue="false" />
     <SwitchPreferenceCompat app:key="shade_clean_light_shade" app:title="Clean notification shade" app:summary="Flash once after the notification shade opens or closes. Off by default: the light shade leaves little ghosting, and the clean briefly slows the panel." app:defaultValue="false" />
 
     <ListPreference app:key="render_rate" app:title="Android frame rate" app:entries="@array/render_rate_entries" app:entryValues="@array/render_rate_values" app:defaultValue="0" app:dialogTitle="Frame rate after restart" />
