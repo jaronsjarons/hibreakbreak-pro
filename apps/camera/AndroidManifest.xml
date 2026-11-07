@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="local.claude.hibreakcamera" android:versionCode="17" android:versionName="17">
+    package="local.claude.hibreakcamera" android:versionCode="18" android:versionName="18">
     <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="35" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera.any" />

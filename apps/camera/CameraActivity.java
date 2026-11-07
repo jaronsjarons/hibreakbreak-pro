@@ -80,8 +80,8 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
 
     private CameraManager manager;
     private CameraCharacteristics chars;
-    private CameraDevice device;
-    private CameraCaptureSession session;
+    private volatile CameraDevice device;
+    private volatile CameraCaptureSession session;
     private CaptureRequest.Builder preview;
     private ImageReader jpeg;
     private HandlerThread thread;
@@ -120,9 +120,19 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     private boolean busy, waitingFocus, waitingPrecapture, sawPrecapture, shootWhenReady, tapFocusing;
     private int lastAf = CaptureResult.CONTROL_AF_STATE_INACTIVE;
     private long tPress;
+    // Nov 6 (stock-firmware report: "error 2", then a crash): on first launch the permission result and onResume
+    // both opened the camera, the first on an already-quit thread, so the app evicted itself. Now there is one
+    // open at a time (opening), every callback checks it belongs to the current open (gen), and the camera thread
+    // lives as long as the activity, so a late callback can still close its device.
+    private volatile int gen;
+    private volatile boolean opening, resumed;
+    private int retries;
 
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
+        thread = new HandlerThread("HiBreakCam");
+        thread.start();
+        bg = new Handler(thread.getLooper());
         manager = getSystemService(CameraManager.class);
         prefs = getSharedPreferences("camera", MODE_PRIVATE);
         // Like other camera apps: no screen timeout while the viewfinder is open.
@@ -371,6 +381,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
         zoom = 1f;
         closeCamera();
         focus.clear();
+        retries = 0;
         if (view.isAvailable()) open();
     }
 
@@ -378,30 +389,39 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
 
     @Override protected void onResume() {
         super.onResume();
-        thread = new HandlerThread("HiBreakCam");
-        thread.start();
-        bg = new Handler(thread.getLooper());
+        resumed = true;
+        retries = 0;
         if (tilt.canDetectOrientation()) tilt.enable();
         bg.post(this::loadLastPhoto);
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+            if (!asked) { asked = true; requestPermissions(new String[]{Manifest.permission.CAMERA}, 1); }
         } else if (view.isAvailable()) open();
     }
 
+    private boolean asked; // once per visit: a denial must not re-open the dialog in a loop
+
+    @Override protected void onStop() { asked = false; super.onStop(); }
+
+    // Runs just before onResume, which opens the camera; opening here as well was the double open.
     @Override public void onRequestPermissionsResult(int code, String[] p, int[] r) {
-        if (r.length > 0 && r[0] == PackageManager.PERMISSION_GRANTED && view.isAvailable()) open();
-        else setStatus("Camera permission is needed");
+        if (r.length == 0 || r[0] != PackageManager.PERMISSION_GRANTED) setStatus("Camera permission is needed");
     }
 
     @Override protected void onPause() {
+        resumed = false;
         tilt.disable();
         closeCamera();
-        thread.quitSafely();
         super.onPause();
     }
 
+    @Override protected void onDestroy() {
+        closeCamera();
+        thread.quitSafely();
+        super.onDestroy();
+    }
+
     @Override public void onSurfaceTextureAvailable(SurfaceTexture s, int w, int h) {
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) open();
+        if (resumed && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) open();
     }
     @Override public void onSurfaceTextureSizeChanged(SurfaceTexture s, int w, int h) {}
     @Override public boolean onSurfaceTextureDestroyed(SurfaceTexture s) { return true; }
@@ -410,7 +430,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     // ---------------------------------------------------------------- camera setup
 
     private void open() {
-        if (device != null) return;
+        if (device != null || opening) return;
         try {
             String id = null;
             int want = front ? CameraCharacteristics.LENS_FACING_FRONT : CameraCharacteristics.LENS_FACING_BACK;
@@ -433,10 +453,13 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
             List<Size> sizes = new ArrayList<>(Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)));
             Size[] high = map.getHighResolutionOutputSizes(ImageFormat.JPEG);
             if (high != null) sizes.addAll(Arrays.asList(high));
+            // After a failed session, retry with the largest regular size (some firmware rejects high-res sizes).
+            if (safeSize) sizes = new ArrayList<>(Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)));
             Size still = sizes.get(0);
             for (Size s : sizes) if (s.getWidth() * 3 == s.getHeight() * 4
                     && (long) s.getWidth() * s.getHeight() > (long) still.getWidth() * still.getHeight()) still = s;
-            Log.i(TAG, "camera " + id + " still " + still + " af=" + hasAf + " flash=" + hasFlash);
+            Log.i(TAG, "camera " + id + " still " + still + " af=" + hasAf + " flash=" + hasFlash + " safe=" + safeSize);
+            if (jpeg != null) jpeg.close();
             jpeg = ImageReader.newInstance(still.getWidth(), still.getHeight(), ImageFormat.JPEG, 2);
             jpeg.setOnImageAvailableListener(this::onJpeg, bg);
             fitPreview();
@@ -444,14 +467,62 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
                 view.setScaleX(front ? -1f : 1f); // selfie preview behaves like a mirror
                 refreshChips();
             });
+            final int mine = ++gen;
+            opening = true;
             manager.openCamera(id, new CameraDevice.StateCallback() {
-                @Override public void onOpened(CameraDevice d) { device = d; startSession(); }
-                @Override public void onDisconnected(CameraDevice d) { d.close(); device = null; }
-                @Override public void onError(CameraDevice d, int e) { d.close(); device = null; setStatus("Camera error " + e); }
+                @Override public void onOpened(CameraDevice d) {
+                    if (mine != gen) { d.close(); return; } // closed or replaced while opening
+                    opening = false;
+                    device = d;
+                    startSession();
+                }
+                @Override public void onDisconnected(CameraDevice d) {
+                    d.close();
+                    if (mine != gen) return;
+                    opening = false;
+                    device = null;
+                    session = null;
+                    setStatus("Camera taken by another app · reopen Fast Cam");
+                }
+                @Override public void onError(CameraDevice d, int e) {
+                    d.close();
+                    if (mine != gen) return;
+                    opening = false;
+                    device = null;
+                    session = null;
+                    Log.w(TAG, "camera error " + e);
+                    // 1 in use, 2 too many cameras open: often brief (another app or the last close is
+                    // still letting go), so try again a few times before giving up.
+                    if ((e == ERROR_CAMERA_IN_USE || e == ERROR_MAX_CAMERAS_IN_USE) && retries < 3) {
+                        retries++;
+                        setStatus("Camera busy · trying again…");
+                        ui.postDelayed(() -> { if (resumed && view.isAvailable()) open(); }, 800L * retries);
+                        return;
+                    }
+                    setStatus(errorText(e));
+                }
             }, bg);
-        } catch (CameraAccessException | SecurityException e) {
+        } catch (CameraAccessException | RuntimeException e) {
             Log.e(TAG, "open", e);
-            setStatus("Cannot open camera");
+            opening = false;
+            setStatus(e instanceof CameraAccessException
+                    ? errorText(((CameraAccessException) e).getReason() == CameraAccessException.CAMERA_DISABLED
+                        ? CameraDevice.StateCallback.ERROR_CAMERA_DISABLED : CameraDevice.StateCallback.ERROR_CAMERA_IN_USE)
+                    : "Cannot open camera · " + e.getClass().getSimpleName());
+        }
+    }
+
+    private boolean safeSize;
+
+    private static String errorText(int e) {
+        switch (e) {
+            case CameraDevice.StateCallback.ERROR_CAMERA_IN_USE:
+            case CameraDevice.StateCallback.ERROR_MAX_CAMERAS_IN_USE:
+                return "Camera is in use by another app (error " + e + ") · close other camera apps, then reopen";
+            case CameraDevice.StateCallback.ERROR_CAMERA_DISABLED:
+                return "Camera is turned off on this phone (error 3) · check privacy settings";
+            default:
+                return "Camera stopped working (error " + e + ") · reopen Fast Cam";
         }
     }
 
@@ -468,8 +539,10 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     }
 
     private void startSession() {
+        final CameraDevice dev = device;
+        SurfaceTexture tex = view.getSurfaceTexture();
+        if (dev == null || jpeg == null || tex == null) { Log.w(TAG, "session: nothing to show on"); return; }
         try {
-            SurfaceTexture tex = view.getSurfaceTexture();
             tex.setDefaultBufferSize(PREVIEW.getWidth(), PREVIEW.getHeight());
             Surface surface = new Surface(tex);
             preview = device.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
@@ -481,17 +554,32 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
                     Arrays.asList(new OutputConfiguration(surface), new OutputConfiguration(jpeg.getSurface())),
                     bg::post, new CameraCaptureSession.StateCallback() {
                 @Override public void onConfigured(CameraCaptureSession s) {
+                    if (dev != device) { s.close(); return; }
                     session = s;
+                    retries = 0;
                     repeat();
                     setStatus(describe());
                     if (shootWhenReady) { shootWhenReady = false; ui.postDelayed(CameraActivity.this::shoot, 1500); }
                 }
-                @Override public void onConfigureFailed(CameraCaptureSession s) { setStatus("Camera setup failed"); }
+                @Override public void onConfigureFailed(CameraCaptureSession s) { sessionFailed(dev, "configure failed"); }
             });
             config.setSessionParameters(params.build());
-            device.createCaptureSession(config);
-        } catch (CameraAccessException e) {
+            dev.createCaptureSession(config);
+        } catch (CameraAccessException | RuntimeException e) {
             Log.e(TAG, "session", e);
+            sessionFailed(dev, e.getClass().getSimpleName());
+        }
+    }
+
+    /** First failure: reopen with a regular-size photo stream. Second: say so instead of crashing. */
+    private void sessionFailed(CameraDevice dev, String why) {
+        if (dev != device) return;
+        Log.w(TAG, "session failed (" + why + ") safe=" + safeSize);
+        if (!safeSize) {
+            safeSize = true;
+            ui.post(() -> { closeCamera(); if (resumed && view.isAvailable()) open(); });
+        } else {
+            setStatus("Camera setup failed (" + why + ") · reopen Fast Cam");
         }
     }
 
@@ -509,7 +597,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
             preview.set(CaptureRequest.CONTROL_ZOOM_RATIO, zoom);
             applyTone(preview);
             session.setRepeatingRequest(preview.build(), progress, bg);
-        } catch (CameraAccessException | IllegalStateException e) {
+        } catch (CameraAccessException | RuntimeException e) {
             Log.e(TAG, "repeat", e);
         }
     }
@@ -580,7 +668,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
                 releaseFocus();
                 ui.post(() -> focus.clear());
             }, 5000);
-        } catch (CameraAccessException e2) {
+        } catch (CameraAccessException | RuntimeException e2) {
             Log.e(TAG, "focus", e2);
         }
         return true;
@@ -605,7 +693,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
                 preview.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_IDLE);
                 bg.postDelayed(() -> { if (waitingPrecapture) { waitingPrecapture = false; Log.i(TAG, "precapture timeout"); focusThenStill(); } }, 1500);
                 return;
-            } catch (CameraAccessException e) {
+            } catch (CameraAccessException | RuntimeException e) {
                 Log.e(TAG, "precapture", e);
                 waitingPrecapture = false;
             }
@@ -637,13 +725,14 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
             session.setRepeatingRequest(preview.build(), progress, bg);
             // Never wait forever for focus (dim light scans slowly).
             bg.postDelayed(() -> { if (waitingFocus) { waitingFocus = false; Log.i(TAG, "focus timeout"); still(); } }, 2500);
-        } catch (CameraAccessException e) {
+        } catch (CameraAccessException | RuntimeException e) {
             Log.e(TAG, "trigger", e);
             done();
         }
     }
 
     private void still() {
+        if (device == null || session == null || jpeg == null) { done(); return; }
         try {
             CaptureRequest.Builder b = device.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             b.addTarget(jpeg.getSurface());
@@ -686,7 +775,7 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
                     done();
                 }
             }, bg);
-        } catch (CameraAccessException | IllegalStateException e) {
+        } catch (CameraAccessException | RuntimeException e) {
             Log.e(TAG, "still", e);
             done();
         }
@@ -916,6 +1005,10 @@ public class CameraActivity extends Activity implements TextureView.SurfaceTextu
     }
 
     private void closeCamera() {
+        gen++;            // callbacks from this open are now stale and close their own device
+        opening = false;
+        waitingFocus = waitingPrecapture = false;
+        if (busy) done();
         if (session != null) { session.close(); session = null; }
         if (device != null) { device.close(); device = null; }
         if (jpeg != null) { jpeg.close(); jpeg = null; }

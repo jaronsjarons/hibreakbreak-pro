@@ -2,6 +2,14 @@
 
 **HiBreakBreak Pro: a usability mod for HiBreak Evolution X on the Bigme HiBreak Pro**
 
+## 0.1.6 (November 2026)
+
+- **Fast Cam 0.1.1: fixed "Camera error 2" and a crash on first launch.** Reported on Bigme's stock software. Right after you allowed camera access, Fast Cam opened the camera twice at once and got in its own way; stock Android refuses the second open, which showed as "error 2" and then crashed. It now opens the camera once. If the camera is busy it tries again a few times, and if it still can't, it says why instead of crashing.
+
+**Already on 0.1.x?** No need to reflash. Install `Fast-Cam-0.1.1.apk` from this release over your current Fast Cam.
+
+**Just using the apps?** Same: install `Fast-Cam-0.1.1.apk` over your current Fast Cam. The other apps are unchanged.
+
 ## 0.1.5 (November 2026)
 
 The screen and typing settings a new phone starts with are now the ones tuned on the author's phone.
